@@ -37,7 +37,9 @@
     "types": [
       "fs-extra",
       "glob",
-      "node"
+      "jasmine",
+      "node",
+      "sinon"
     ]
   },
   "include": [
