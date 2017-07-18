@@ -1,0 +1,51 @@
+{
+  "name": "yadop",
+  "version": "1.0.0",
+  "description": "Yet another Doc Parser",
+  "main": "built/index.js",
+  "scripts": {
+    "lint": "tslint -p tsconfig.json",
+    "build": "tsc -p tsconfig.json",
+    "test": "jasmine-node built --match ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/devolksbank/yadop.git"
+  },
+  "keywords": [
+    "doctrine",
+    "espree",
+    "jsdoc",
+    "ngdoc"
+  ],
+  "author": "",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/devolksbank/yadop/blob/master/LICENSE"
+    }
+  ],
+  "bugs": {
+    "url": "https://github.com/devolksbank/yadop/issues"
+  },
+  "homepage": "https://github.com/devolksbank/yadop#readme",
+  "devDependencies": {
+    "@types/fs-extra": "4.0.0",
+    "@types/glob": "5.0.32",
+    "@types/jasmine": "2.5.54",
+    "@types/node": "8.0.24",
+    "@types/sinon": "2.3.3",
+    "jasmine-node": "1.14.5",
+    "tslint": "5.6.0",
+    "tslint-eslint-rules": "4.1.1",
+    "typescript": "2.4.2",
+    "vrsource-tslint-rules": "5.1.1"
+  },
+  "dependencies": {
+    "doctrine": "2.0.0",
+    "espree": "3.5.0",
+    "fs-extra": "4.0.1",
+    "glob": "7.1.2",
+    "sinon": "3.2.1"
+  }
+}

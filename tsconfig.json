@@ -1,0 +1,50 @@
+{
+  "compilerOptions": {
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
+    "baseUrl": ".",
+    "declaration": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "lib": [
+      "es6",
+      "es2015",
+      "dom"
+    ],
+    "module": "commonjs",
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitUseStrict": false,
+    "noLib": false,
+    "outDir": "built",
+    "paths": {
+      "doctrine": [
+        "@types/doctrine/doctrine.d.ts"
+      ],
+      "espree": [
+        "@types/espree/espree.d.ts"
+      ]
+    },
+    "pretty": true,
+    "removeComments": true,
+    "sourceMap": true,
+    "target": "es5",
+    "typeRoots": [
+      "node_modules/@types",
+      "node_modules"
+    ],
+    "types": [
+      "fs-extra",
+      "glob",
+      "node"
+    ]
+  },
+  "include": [
+    "lib/**/*.ts",
+    "index.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

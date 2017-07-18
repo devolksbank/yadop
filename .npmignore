@@ -1,0 +1,6 @@
+# ts sources
+/lib
+index.ts
+
+# descriptors
+@types
