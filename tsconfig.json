@@ -13,7 +13,7 @@
     ],
     "module": "commonjs",
     "noFallthroughCasesInSwitch": true,
-    "noImplicitAny": true,
+    "noImplicitAny": false,
     "noImplicitReturns": true,
     "noImplicitUseStrict": false,
     "noLib": false,
@@ -27,7 +27,7 @@
       ]
     },
     "pretty": true,
-    "removeComments": true,
+    "removeComments": false,
     "sourceMap": true,
     "target": "es5",
     "typeRoots": [
@@ -44,7 +44,8 @@
   },
   "include": [
     "lib/**/*.ts",
-    "index.ts"
+    "index.ts",
+    "test/**/*.ts"
   ],
   "exclude": [
     "node_modules"

@@ -34,7 +34,7 @@ import * as path from 'path';
             doctrineParseFn = sinon.stub(doctrine, 'parse');
             doctrineParseFn.callsFake((comment, options) => ({
                 description: comment + '-doctrine',
-                tags: [{ title: 'param', "description": "some param" }]
+                tags: [{ title: 'param', 'description': 'some param' }]
             }));
         });
 
@@ -76,19 +76,19 @@ import * as path from 'path';
                     expect(result.length).toBe(4);
                     expect(result[0]).toEqual({
                         description: 'one-doctrine',
-                        tags: [{ title: 'param', "description": "some param" }]
+                        tags: [{ title: 'param', 'description': 'some param' }]
                     } as doctrine.Comment);
                     expect(result[1]).toEqual({
                         description: 'two-doctrine',
-                        tags: [{ title: 'param', "description": "some param" }]
+                        tags: [{ title: 'param', 'description': 'some param' }]
                     } as doctrine.Comment);
                     expect(result[2]).toEqual({
                         description: 'another two-doctrine',
-                        tags: [{ title: 'param', "description": "some param" }]
+                        tags: [{ title: 'param', 'description': 'some param' }]
                     } as doctrine.Comment);
                     expect(result[3]).toEqual({
                         description: 'three-doctrine',
-                        tags: [{ title: 'param', "description": "some param" }]
+                        tags: [{ title: 'param', 'description': 'some param' }]
                     } as doctrine.Comment);
                 });
 
@@ -133,19 +133,19 @@ import * as path from 'path';
                     expect(result.length).toBe(4);
                     expect(result[0]).toEqual({
                         description: 'one-doctrine',
-                        tags: [{ title: 'param', "description": "some param" }]
+                        tags: [{ title: 'param', 'description': 'some param' }]
                     } as doctrine.Comment);
                     expect(result[1]).toEqual({
                         description: 'two-doctrine',
-                        tags: [{ title: 'param', "description": "some param" }]
+                        tags: [{ title: 'param', 'description': 'some param' }]
                     } as doctrine.Comment);
                     expect(result[2]).toEqual({
                         description: 'another two-doctrine',
-                        tags: [{ title: 'param', "description": "some param" }]
+                        tags: [{ title: 'param', 'description': 'some param' }]
                     } as doctrine.Comment);
                     expect(result[3]).toEqual({
                         description: 'three-doctrine',
-                        tags: [{ title: 'param', "description": "some param" }]
+                        tags: [{ title: 'param', 'description': 'some param' }]
                     } as doctrine.Comment);
                 });
 

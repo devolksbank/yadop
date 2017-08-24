@@ -7,7 +7,7 @@ import Configuration from '../configuration';
 import NgdocProcessor from './ngdocProcessor';
 
 (() => {
-    describe('processor', () => {
+    describe('ngdoc processor', () => {
         let globSyncFn: sinon.SinonStub;
         let fsReadFileSyncFn: sinon.SinonStub;
         let espreeParseFn: sinon.SinonStub;
@@ -33,19 +33,19 @@ import NgdocProcessor from './ngdocProcessor';
             doctrineParseFn = sinon.stub(doctrine, 'parse');
             doctrineParseFn.onCall(0).returns({
                 description: 'one-doctrine',
-                tags: [{ title: 'param', "description": "some param" }]
+                tags: [{ title: 'param', 'description': 'some param' }]
             });
             doctrineParseFn.onCall(1).returns({
                 description: 'two-doctrine',
-                tags: [{ title: 'param', "description": "some param" }]
+                tags: [{ title: 'param', 'description': 'some param' }]
             });
             doctrineParseFn.onCall(2).returns({
                 description: 'another two-doctrine',
-                tags: [{ title: 'ngdoc', "description": "some param" }]
+                tags: [{ title: 'ngdoc', 'description': 'some param' }]
             });
             doctrineParseFn.onCall(3).returns({
                 description: 'three-doctrine',
-                tags: [{ title: 'ngdoc', "description": "some param" }]
+                tags: [{ title: 'ngdoc', 'description': 'some param' }]
             });
         });
 
@@ -60,11 +60,11 @@ import NgdocProcessor from './ngdocProcessor';
                 expect(result.length).toBe(2);
                 expect(result[0]).toEqual({
                     description: 'another two-doctrine',
-                    tags: [{ title: 'ngdoc', "description": "some param" }]
+                    tags: [{ title: 'ngdoc', 'description': 'some param' }]
                 } as doctrine.Comment);
                 expect(result[1]).toEqual({
                     description: 'three-doctrine',
-                    tags: [{ title: 'ngdoc', "description": "some param" }]
+                    tags: [{ title: 'ngdoc', 'description': 'some param' }]
                 } as doctrine.Comment);
             });
 

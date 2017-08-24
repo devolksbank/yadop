@@ -110,11 +110,12 @@ import {Method} from './model/method';
 
             it('maps', () => {
                 const actual: Module[] = mapper.map(comments);
-                const expected = [{ name: 'my-module' }, {
+                const expected = [{ name: 'my-module', entities: [] }, {
                     name: 'another-module',
                     entities: [{
                         name: 'my-component',
                         type: 'component',
+                        methods: [],
                         attributes: [{
                             name: 'items',
                             optional: false,
@@ -145,8 +146,9 @@ import {Method} from './model/method';
                             name: 'SomeService#welcome',
                             description: 'Say welcome',
                             returns: { name: 'message The message', type: 'object' }
-                        }]
-                    }, { name: 'AnotherService', type: 'service' }]
+                        }],
+                        attributes: []
+                    }, { name: 'AnotherService', type: 'service', methods: [], attributes: [] }]
                 }];
                 expect(actual).toEqual(expected)
             });

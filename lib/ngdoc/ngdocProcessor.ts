@@ -6,7 +6,8 @@ class NgdocProcessor extends Processor {
 
     /** {@inheritDoc} */
     process(): doctrine.Comment[] {
-        return super.process().filter(this._onlyCommentsContainingNgdoc);
+        return super.process()
+            .filter(this._onCommentsContainingNgdoc);
     }
 
     /**
@@ -15,8 +16,8 @@ class NgdocProcessor extends Processor {
      * @return {boolean} match Indicator match.
      * @private
      */
-    private _onlyCommentsContainingNgdoc = (comment: doctrine.Comment): boolean =>
-    comment.tags.filter((tag) => tag.title === 'ngdoc').length > 0;
+    private _onCommentsContainingNgdoc = (comment: doctrine.Comment): boolean =>
+        comment.tags.filter((tag) => tag.title === 'ngdoc').length > 0;
 }
 
 export default NgdocProcessor;
