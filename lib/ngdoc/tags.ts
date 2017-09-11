@@ -1,32 +1,14 @@
 import * as doctrine from 'doctrine';
 export namespace tags {
     export namespace annotations {
-        /**
-         * Indicates if the tag is contains a @name tag.
-         * @param tag The tag.
-         * @return {boolean} indicator The indicator.
-         * @private
-         */
-        export function _onlyAtTags(tag: doctrine.Tag, tagName): boolean {
-            return tag.title === tagName;
-        }
 
         /**
-         * Indicates if the tag is contains a @ngdoc tag.
+         * Indicates if the tag is contains a @description tag.
          * @param tag The tag.
          * @return {boolean} indicator The indicator.
          */
-        export function ngdoc(tag: doctrine.Tag): boolean {
-            return _onlyAtTags(tag, 'ngdoc');
-        }
-
-        /**
-         * Indicates if the tag is contains a @module tag.
-         * @param tag The tag.
-         * @return {boolean} indicator The indicator.
-         */
-        export function module(tag: doctrine.Tag): boolean {
-            return _onlyAtTags(tag, 'module');
+        export function description(tag: doctrine.Tag): boolean {
+            return _onlyAtTags(tag, 'description');
         }
 
         /**
@@ -39,6 +21,15 @@ export namespace tags {
         }
 
         /**
+         * Indicates if the tag is contains a @module tag.
+         * @param tag The tag.
+         * @return {boolean} indicator The indicator.
+         */
+        export function module(tag: doctrine.Tag): boolean {
+            return _onlyAtTags(tag, 'module');
+        }
+
+        /**
          * Indicates if the tag is contains a @name tag.
          * @param tag The tag.
          * @return {boolean} indicator The indicator.
@@ -48,12 +39,30 @@ export namespace tags {
         }
 
         /**
-         * Indicates if the tag is contains a @description tag.
+         * Indicates if the tag is contains a @ngdoc tag.
          * @param tag The tag.
          * @return {boolean} indicator The indicator.
          */
-        export function description(tag: doctrine.Tag): boolean {
-            return _onlyAtTags(tag, 'description');
+        export function ngdoc(tag: doctrine.Tag): boolean {
+            return _onlyAtTags(tag, 'ngdoc');
+        }
+
+        /**
+         * Indicates if the tag is contains a @param tag.
+         * @param tag The tag.
+         * @return {boolean} indicator The indicator.
+         */
+        export function param(tag: doctrine.Tag): boolean {
+            return _onlyAtTags(tag, 'param');
+        }
+
+        /**
+         * Indicates if the tag is contains a @requires tag.
+         * @param tag The tag.
+         * @return {boolean} indicator The indicator.
+         */
+        export function requires(tag: doctrine.Tag): boolean {
+            return _onlyAtTags(tag, 'requires');
         }
 
         /**
@@ -64,13 +73,15 @@ export namespace tags {
         export function returns(tag: doctrine.Tag): boolean {
             return _onlyAtTags(tag, 'return');
         }
+
         /**
-         * Indicates if the tag is contains a @param tag.
+         * Indicates if the tag is contains a @name tag.
          * @param tag The tag.
          * @return {boolean} indicator The indicator.
+         * @private
          */
-        export function param(tag: doctrine.Tag): boolean {
-            return _onlyAtTags(tag, 'param');
+        export function _onlyAtTags(tag: doctrine.Tag, tagName): boolean {
+            return tag.title === tagName;
         }
     }
 

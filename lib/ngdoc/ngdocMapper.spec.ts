@@ -60,14 +60,16 @@ import {Method} from './model/method';
                 { title: 'ngdoc', description: 'service' },
                 { title: 'module', description: null, type: null, name: 'another-module' },
                 { title: 'name', description: null, name: 'SomeService' },
-                { title: 'description', description: 'Some service' }
+                { title: 'description', description: 'Some service' },
+                { title: 'requires', description: null, name: 'SomeOtherService' },
+                { title: 'requires', description: null, name: 'AnotherService' }
             ]
         }  as doctrine.Comment, { // another entity
             tags: [
                 { title: 'ngdoc', description: 'service' },
                 { title: 'module', description: null, type: null, name: 'another-module' },
                 { title: 'name', description: null, name: 'AnotherService' },
-                { title: 'description', description: 'Another service' }
+                { title: 'requires', description: null, name: 'SomeService' }
             ]
         }  as doctrine.Comment, { // another entity, but does not match a valid entity type
             tags: [
@@ -107,7 +109,6 @@ import {Method} from './model/method';
         });
 
         describe('map', () => {
-
             it('maps', () => {
                 const actual: Module[] = mapper.map(comments);
                 const expected = [{ name: 'my-module', entities: [] }, {
@@ -115,6 +116,7 @@ import {Method} from './model/method';
                     entities: [{
                         name: 'my-component',
                         type: 'component',
+                        description: 'This component does something for me',
                         methods: [],
                         attributes: [{
                             name: 'items',
@@ -131,10 +133,12 @@ import {Method} from './model/method';
                             optional: false,
                             description: 'The value of the item',
                             type: 'number'
-                        }]
+                        }],
+                        requires: []
                     }, {
                         name: 'SomeService',
                         type: 'service',
+                        description: 'Some service',
                         methods: [{
                             name: 'SomeService#sayWhat',
                             description: 'Says what.',
@@ -147,8 +151,18 @@ import {Method} from './model/method';
                             description: 'Say welcome',
                             returns: { name: 'message The message', type: 'object' }
                         }],
-                        attributes: []
-                    }, { name: 'AnotherService', type: 'service', methods: [], attributes: [] }]
+                        attributes: [],
+                        requires: [
+                            'SomeOtherService',
+                            'AnotherService'
+                        ]
+                    }, {
+                        name: 'AnotherService',
+                        type: 'service',
+                        methods: [],
+                        attributes: [],
+                        requires: ['SomeService']
+                    }]
                 }];
                 expect(actual).toEqual(expected)
             });
@@ -167,8 +181,12 @@ import {Method} from './model/method';
             it('gets the valid entities', () => {
                 const entities: Entity[] = mapper.getEntities(comments, { name: 'another-module' });
                 expect(entities.length).toBe(3);
-                expect(entities[0]).toEqual({ name: 'my-component', type: 'component' });
-                expect(entities[1]).toEqual({ name: 'SomeService', type: 'service' });
+                expect(entities[0]).toEqual({
+                    name: 'my-component',
+                    type: 'component',
+                    description: 'This component does something for me'
+                });
+                expect(entities[1]).toEqual({ name: 'SomeService', type: 'service', description: 'Some service' });
                 expect(entities[2]).toEqual({ name: 'AnotherService', type: 'service' });
             });
         });

@@ -7,4 +7,5 @@ export interface Entity {
     type?: string;
     methods?: Method[];
     attributes?: AttributeType[];
+    requires?: string[];
 }
