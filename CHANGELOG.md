@@ -1,0 +1,13 @@
+<a name="1.1.0"></a>
+# 1.1.0 (2017-09-11)
+
+## Features
+- Add requires and description information to entity object
+
+<a name="1.0.0"></a>
+# 1.0.0 (2017-08-31)
+
+## Features
+- Add the yadop.jsdoc.processor functionality to process an entire directory and get all the jsdoc comments.
+- Add the yadop.ngdoc.processor functionality to process an entire directory and get all the ngdoc comments.
+- Add the yadop.ngdoc.mapper functionality to map all the ngdoc comments to a usable module tree.
