@@ -22,8 +22,6 @@ class NgdocMapper {
 
             module.entities.forEach((entity: Entity) => {
                 entity.methods = this.getMethods(comments, entity);
-                entity.attributes = this.getAttributes(comments, module, entity);
-                entity.requires = this.getRequires(comments, entity);
             });
         });
         return modules;
@@ -36,53 +34,6 @@ class NgdocMapper {
      * @private
      */
     private _existingEntityType = (tag: doctrine.Tag): boolean => EntityType[tag.description.toUpperCase()] !== undefined;
-
-    /**
-     * Gets all the attributes for the given entity.
-     * @param {doctrine.Comment[]} comments The comments.
-     * @param {Module} module The module.
-     * @param {Entity} entity The entity.
-     * @returns {AttributeType[]} attributes The attributes.
-     */
-    getAttributes = (comments: doctrine.Comment[], module: Module, entity: Entity): AttributeType[] => {
-        const comment = comments
-            .filter(this._onCommentsMatchingModule(module))
-            .find(this._onTagsMatchingEntity(entity));
-
-        let attributes: AttributeType[] = [];
-        if (comment !== undefined && comment.tags !== undefined) {
-            attributes = comment.tags.filter(tags.annotations.param).map((tag: any) => {
-                const attributeType: AttributeType = {
-                    name: tag.name,
-                    optional: false
-                };
-
-                if (tag.description !== null) {
-                    attributeType.description = tag.description;
-                }
-
-                if (tag.type !== null) {
-                    let type = tag.type;
-                    if (type.type === 'OptionalType') {
-                        attributeType.optional = true;
-                        type = type.expression;
-                    }
-
-                    if (type.type === 'TypeApplication') {
-                        if (type.expression.name === 'Array') {
-                            attributeType.type = type.applications
-                                    .map((application) => application.name)
-                                    .join() + '[]';
-                        }
-                    } else {
-                        attributeType.type = type.name;
-                    }
-                }
-                return attributeType;
-            });
-        }
-        return attributes;
-    };
 
     /**
      * Gets all the entities for the given module.
@@ -114,24 +65,6 @@ class NgdocMapper {
     getModules = (comments: doctrine.Comment[]): Module[] => comments
         .filter(this._onCommentsContainingTheModuleAnnotation)
         .map(this._toModule);
-
-    /**
-     * Gets all the requires for the given entity.
-     * @param {doctrine.Comment[]} comments The comments.
-     * @param {Entity} entity The entity.
-     * @returns {string[]} requires The requires.
-     */
-    getRequires = (comments: doctrine.Comment[], entity: Entity): string[] => {
-        const comment = comments.filter(this._onTagsMatchingEntity(entity))
-            .find(this._onTagsMatchingRequires);
-
-        let requires: string[] = [];
-        if (comment !== undefined) {
-            requires = comment.tags.filter((tag) => tag.title === 'requires').map((tag) => (tag as any).name);
-        }
-
-        return requires;
-    };
 
     /**
      * Indicates if the comment contains tag @ngdoc module.
@@ -253,19 +186,72 @@ class NgdocMapper {
     };
 
     /**
+     * Gets the deprecated tag if present.
+     * @param {doctrine.Comment} comment The entity.
+     * @return {doctrine.Tag} tag The tag.
+     * @private
+     */
+    private _getDeprecated = (comment: doctrine.Comment): doctrine.Tag =>
+        comment.tags.find(tags.annotations.deprecated);
+
+    /**
+     * Gets all the requires for the given entity.
+     * @param {doctrine.Comment} comment The comment.
+     * @returns {string[]} requires The requires.
+     */
+    private _getRequires = (comment: doctrine.Comment): string[] =>
+        comment.tags.filter(tags.annotations.requires).map((tag) => (tag as any).name);
+
+    /**
+     * Gets all the attributes for the given entity.
+     * @param {doctrine.Comment} comment The comment.
+     * @returns {AttributeType[]} attributes The attributes.
+     */
+    private _getAttributes = (comment: doctrine.Comment): AttributeType[] =>
+        comment.tags.filter(tags.annotations.param).map((tag: any) => {
+            const attributeType: AttributeType = {
+                name: tag.name,
+                optional: false
+            };
+
+            if (tag.description !== null) {
+                attributeType.description = tag.description;
+            }
+
+            if (tag.type !== null) {
+                let type = tag.type;
+                if (type.type === 'OptionalType') {
+                    attributeType.optional = true;
+                    type = type.expression;
+                }
+
+                if (type.type === 'TypeApplication') {
+                    if (type.expression.name === 'Array') {
+                        attributeType.type = type.applications
+                                .map((application) => application.name)
+                                .join() + '[]';
+                    }
+                } else {
+                    attributeType.type = type.name;
+                }
+            }
+            return attributeType;
+        });
+    /**
      * Converts the given comment to an Entity.
      * @param {doctrine.Comment} comment The entity.
      * @return {Entity} entity The entity.
      * @private
      */
     private _toEntity = (comment: doctrine.Comment): Entity => {
-        const deprecated = comment.tags.find(tags.annotations.deprecated);
-
         const entity: Entity = {
             name: (comment.tags.find(tags.annotations.name)as any).name,
             type: comment.tags.find(tags.annotations.ngdoc).description,
-            deprecated: deprecated !== undefined
+            deprecated: this._getDeprecated(comment) !== undefined,
+            attributes: this._getAttributes(comment),
+            requires: this._getRequires(comment)
         };
+
 
         const description = comment.tags.find(tags.annotations.description);
         if (description !== undefined) {

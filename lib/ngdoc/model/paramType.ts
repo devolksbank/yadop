@@ -1,5 +1,5 @@
 export interface ParamType {
-    name: string;
     description?: string;
+    name: string;
     type?: string;
 }

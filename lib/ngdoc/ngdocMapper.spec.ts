@@ -190,15 +190,40 @@ import {Method} from './model/method';
                     name: 'my-component',
                     type: 'component',
                     description: 'This component does something for me',
-                    deprecated: false
+                    deprecated: false,
+                    attributes: [{
+                        name: 'items',
+                        optional: false,
+                        description: 'Some attribute',
+                        type: 'Object[]'
+                    }, {
+                        name: 'items[].name',
+                        optional: true,
+                        description: 'The (optional) name of the item',
+                        type: 'string'
+                    }, {
+                        name: 'items[].value',
+                        optional: false,
+                        description: 'The value of the item',
+                        type: 'number'
+                    }],
+                    requires: []
                 });
                 expect(entities[1]).toEqual({
                     name: 'SomeService',
                     type: 'service',
                     description: 'Some service',
-                    deprecated: false
+                    deprecated: false,
+                    attributes: [],
+                    requires: ['SomeOtherService', 'AnotherService']
                 });
-                expect(entities[2]).toEqual({ name: 'AnotherService', type: 'service', deprecated: false });
+                expect(entities[2]).toEqual({
+                    name: 'AnotherService',
+                    type: 'service',
+                    deprecated: false,
+                    attributes: [],
+                    requires: ['SomeService']
+                });
             });
         });
 
@@ -207,7 +232,9 @@ import {Method} from './model/method';
                 const serviceMethod: Method[] = mapper.getMethods(comments, {
                     name: 'SomeService',
                     type: 'service',
-                    deprecated: false
+                    deprecated: false,
+                    requires: [],
+                    attributes: []
                 });
                 expect(serviceMethod.length).toBe(2);
                 expect(serviceMethod[0]).toEqual({

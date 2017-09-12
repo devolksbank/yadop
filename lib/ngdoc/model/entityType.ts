@@ -1,6 +1,6 @@
 export enum EntityType {
     COMPONENT = 0,
-    SERVICE = 1,
-    DIRECTIVE = 2,
-    FILTER = 3
+    DIRECTIVE = 1,
+    FILTER = 2,
+    SERVICE = 3
 }
