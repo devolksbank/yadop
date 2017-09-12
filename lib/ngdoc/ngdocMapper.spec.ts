@@ -117,6 +117,7 @@ import {Method} from './model/method';
                         name: 'my-component',
                         type: 'component',
                         description: 'This component does something for me',
+                        deprecated: false,
                         methods: [],
                         attributes: [{
                             name: 'items',
@@ -139,9 +140,11 @@ import {Method} from './model/method';
                         name: 'SomeService',
                         type: 'service',
                         description: 'Some service',
+                        deprecated: false,
                         methods: [{
                             name: 'SomeService#sayWhat',
                             description: 'Says what.',
+                            deprecated: false,
                             params: [{ name: 'who', description: 'Who said it', type: 'string' }, {
                                 name: 'when',
                                 description: 'When to say'
@@ -149,6 +152,7 @@ import {Method} from './model/method';
                         }, {
                             name: 'SomeService#welcome',
                             description: 'Say welcome',
+                            deprecated: false,
                             returns: { name: 'message The message', type: 'object' }
                         }],
                         attributes: [],
@@ -159,6 +163,7 @@ import {Method} from './model/method';
                     }, {
                         name: 'AnotherService',
                         type: 'service',
+                        deprecated: false,
                         methods: [],
                         attributes: [],
                         requires: ['SomeService']
@@ -184,10 +189,16 @@ import {Method} from './model/method';
                 expect(entities[0]).toEqual({
                     name: 'my-component',
                     type: 'component',
-                    description: 'This component does something for me'
+                    description: 'This component does something for me',
+                    deprecated: false
                 });
-                expect(entities[1]).toEqual({ name: 'SomeService', type: 'service', description: 'Some service' });
-                expect(entities[2]).toEqual({ name: 'AnotherService', type: 'service' });
+                expect(entities[1]).toEqual({
+                    name: 'SomeService',
+                    type: 'service',
+                    description: 'Some service',
+                    deprecated: false
+                });
+                expect(entities[2]).toEqual({ name: 'AnotherService', type: 'service', deprecated: false });
             });
         });
 
@@ -195,11 +206,12 @@ import {Method} from './model/method';
             it('gets the methods', () => {
                 const serviceMethod: Method[] = mapper.getMethods(comments, {
                     name: 'SomeService',
-                    type: 'service'
+                    type: 'service',
+                    deprecated: false
                 });
                 expect(serviceMethod.length).toBe(2);
                 expect(serviceMethod[0]).toEqual({
-                    name: 'SomeService#sayWhat', description: 'Says what.',
+                    name: 'SomeService#sayWhat', description: 'Says what.', deprecated: false,
                     params: [
                         { name: 'who', description: 'Who said it', type: 'string' }, // with a type
                         { name: 'when', description: 'When to say' } // without type (not specified)
@@ -208,6 +220,7 @@ import {Method} from './model/method';
                 expect(serviceMethod[1]).toEqual({
                     name: 'SomeService#welcome',
                     description: 'Say welcome',
+                    deprecated: false,
                     returns: { name: 'message The message', type: 'object' }
                 });
             });

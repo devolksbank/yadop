@@ -12,6 +12,15 @@ export namespace tags {
         }
 
         /**
+         * Indicates if the tag is contains a @deprecated tag.
+         * @param tag The tag.
+         * @return {boolean} indicator The indicator.
+         */
+        export function deprecated(tag: doctrine.Tag): boolean {
+            return _onlyAtTags(tag, 'deprecated');
+        }
+
+        /**
          * Indicates if the tag is contains a @methodOf tag.
          * @param tag The tag.
          * @return {boolean} indicator The indicator.

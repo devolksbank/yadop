@@ -8,4 +8,5 @@ export interface Entity {
     methods?: Method[];
     attributes?: AttributeType[];
     requires?: string[];
+    deprecated: boolean;
 }
