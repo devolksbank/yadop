@@ -270,9 +270,9 @@ class NgdocMapper {
      * @private
      */
     private _toMethod = (comment: doctrine.Comment): Method => {
-
+        const methodName = (comment.tags.find(tags.annotations.name)as any).name;
         const method: Method = {
-            name: (comment.tags.find(tags.annotations.name)as any).name,
+            name: methodName.substring(methodName.indexOf('#') + 1, methodName.length),
             description: (comment.tags.find(tags.annotations.description)as any).description
         };
 

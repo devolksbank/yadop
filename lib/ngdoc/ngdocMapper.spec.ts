@@ -83,7 +83,7 @@ import {Method} from './model/method';
             tags: [
                 { title: 'ngdoc', description: 'method' },
                 { title: 'methodOf', description: 'SomeService' },
-                { title: 'name', description: null, name: 'SomeService#sayWhat' },
+                { title: 'name', description: null, name: 'sayWhat' },
                 { title: 'description', description: 'Says what.' },
                 {
                     title: 'param', description: 'Who said it', name: 'who',
@@ -141,14 +141,14 @@ import {Method} from './model/method';
                         type: 'service',
                         description: 'Some service',
                         methods: [{
-                            name: 'SomeService#sayWhat',
+                            name: 'sayWhat',
                             description: 'Says what.',
                             params: [{ name: 'who', description: 'Who said it', type: 'string' }, {
                                 name: 'when',
                                 description: 'When to say'
                             }]
                         }, {
-                            name: 'SomeService#welcome',
+                            name: 'welcome',
                             description: 'Say welcome',
                             returns: { name: 'message The message', type: 'object' }
                         }],
@@ -232,14 +232,14 @@ import {Method} from './model/method';
                 });
                 expect(serviceMethod.length).toBe(2);
                 expect(serviceMethod[0]).toEqual({
-                    name: 'SomeService#sayWhat', description: 'Says what.',
+                    name: 'sayWhat', description: 'Says what.',
                     params: [
                         { name: 'who', description: 'Who said it', type: 'string' }, // with a type
                         { name: 'when', description: 'When to say' } // without type (not specified)
                     ] // no return type
                 });
                 expect(serviceMethod[1]).toEqual({
-                    name: 'SomeService#welcome',
+                    name: 'welcome',
                     description: 'Say welcome',
                     returns: { name: 'message The message', type: 'object' }
                 });
