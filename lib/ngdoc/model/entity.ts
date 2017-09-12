@@ -4,7 +4,7 @@ import {AttributeType} from './attributeType';
 export interface Entity {
     attributes?: AttributeType[];
     name: string;
-    deprecated: boolean;
+    deprecated?: string;
     description?: string;
     methods?: Method[];
     requires: string[];

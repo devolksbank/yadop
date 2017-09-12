@@ -3,7 +3,7 @@ import {ParamType} from './paramType';
 
 export interface Method {
     description?: string;
-    deprecated: boolean;
+    deprecated?: string;
     name: string;
     params?: ParamType[];
     returns?: ReturnType;

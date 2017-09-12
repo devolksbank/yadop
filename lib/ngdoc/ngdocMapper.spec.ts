@@ -69,7 +69,8 @@ import {Method} from './model/method';
                 { title: 'ngdoc', description: 'service' },
                 { title: 'module', description: null, type: null, name: 'another-module' },
                 { title: 'name', description: null, name: 'AnotherService' },
-                { title: 'requires', description: null, name: 'SomeService' }
+                { title: 'requires', description: null, name: 'SomeService' },
+                { title: 'deprecated', description: 'Use some other service.' },
             ]
         }  as doctrine.Comment, { // another entity, but does not match a valid entity type
             tags: [
@@ -117,7 +118,6 @@ import {Method} from './model/method';
                         name: 'my-component',
                         type: 'component',
                         description: 'This component does something for me',
-                        deprecated: false,
                         methods: [],
                         attributes: [{
                             name: 'items',
@@ -140,11 +140,9 @@ import {Method} from './model/method';
                         name: 'SomeService',
                         type: 'service',
                         description: 'Some service',
-                        deprecated: false,
                         methods: [{
                             name: 'SomeService#sayWhat',
                             description: 'Says what.',
-                            deprecated: false,
                             params: [{ name: 'who', description: 'Who said it', type: 'string' }, {
                                 name: 'when',
                                 description: 'When to say'
@@ -152,7 +150,6 @@ import {Method} from './model/method';
                         }, {
                             name: 'SomeService#welcome',
                             description: 'Say welcome',
-                            deprecated: false,
                             returns: { name: 'message The message', type: 'object' }
                         }],
                         attributes: [],
@@ -163,7 +160,7 @@ import {Method} from './model/method';
                     }, {
                         name: 'AnotherService',
                         type: 'service',
-                        deprecated: false,
+                        deprecated: 'Use some other service.',
                         methods: [],
                         attributes: [],
                         requires: ['SomeService']
@@ -190,7 +187,6 @@ import {Method} from './model/method';
                     name: 'my-component',
                     type: 'component',
                     description: 'This component does something for me',
-                    deprecated: false,
                     attributes: [{
                         name: 'items',
                         optional: false,
@@ -213,14 +209,13 @@ import {Method} from './model/method';
                     name: 'SomeService',
                     type: 'service',
                     description: 'Some service',
-                    deprecated: false,
                     attributes: [],
                     requires: ['SomeOtherService', 'AnotherService']
                 });
                 expect(entities[2]).toEqual({
                     name: 'AnotherService',
                     type: 'service',
-                    deprecated: false,
+                    deprecated: 'Use some other service.',
                     attributes: [],
                     requires: ['SomeService']
                 });
@@ -232,13 +227,12 @@ import {Method} from './model/method';
                 const serviceMethod: Method[] = mapper.getMethods(comments, {
                     name: 'SomeService',
                     type: 'service',
-                    deprecated: false,
                     requires: [],
                     attributes: []
                 });
                 expect(serviceMethod.length).toBe(2);
                 expect(serviceMethod[0]).toEqual({
-                    name: 'SomeService#sayWhat', description: 'Says what.', deprecated: false,
+                    name: 'SomeService#sayWhat', description: 'Says what.',
                     params: [
                         { name: 'who', description: 'Who said it', type: 'string' }, // with a type
                         { name: 'when', description: 'When to say' } // without type (not specified)
@@ -247,7 +241,6 @@ import {Method} from './model/method';
                 expect(serviceMethod[1]).toEqual({
                     name: 'SomeService#welcome',
                     description: 'Say welcome',
-                    deprecated: false,
                     returns: { name: 'message The message', type: 'object' }
                 });
             });

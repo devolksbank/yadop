@@ -247,11 +247,14 @@ class NgdocMapper {
         const entity: Entity = {
             name: (comment.tags.find(tags.annotations.name)as any).name,
             type: comment.tags.find(tags.annotations.ngdoc).description,
-            deprecated: this._getDeprecated(comment) !== undefined,
             attributes: this._getAttributes(comment),
             requires: this._getRequires(comment)
         };
 
+        const deprecated = this._getDeprecated(comment);
+        if(deprecated !== undefined) {
+            entity.deprecated = deprecated.description;
+        }
 
         const description = comment.tags.find(tags.annotations.description);
         if (description !== undefined) {
@@ -267,13 +270,16 @@ class NgdocMapper {
      * @private
      */
     private _toMethod = (comment: doctrine.Comment): Method => {
-        const deprecated = comment.tags.find(tags.annotations.deprecated);
 
         const method: Method = {
             name: (comment.tags.find(tags.annotations.name)as any).name,
-            description: (comment.tags.find(tags.annotations.description)as any).description,
-            deprecated: deprecated !== undefined
+            description: (comment.tags.find(tags.annotations.description)as any).description
         };
+
+        const deprecated = this._getDeprecated(comment);
+        if(deprecated !== undefined) {
+            method.deprecated = deprecated.description;
+        }
 
         const returnType = this._getReturn(comment);
         if (returnType !== undefined) {
