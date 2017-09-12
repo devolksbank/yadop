@@ -1,3 +1,13 @@
+<a name="1.2.0"></a>
+# 1.2.0 (2017-09-12)
+
+## Features
+- Add deprecated to entity object
+
+## Fix 
+- Method names are now split on #
+- Attributes and requires are now processed while converting to an entity object
+
 <a name="1.1.0"></a>
 # 1.1.0 (2017-09-11)
 
