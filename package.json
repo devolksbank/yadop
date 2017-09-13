@@ -1,6 +1,6 @@
 {
   "name": "yadop",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Yet another Doc Parser",
   "main": "built/index.js",
   "scripts": {
