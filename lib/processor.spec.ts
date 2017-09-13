@@ -16,7 +16,7 @@ import * as path from 'path';
 
         let configuration: Configuration;
         let processor: Processor;
-        let result: doctrine.Comment[];
+        let result: doctrine.Annotation[];
 
         const code = 'code';
 
@@ -72,24 +72,24 @@ import * as path from 'path';
                     sinon.assert.calledWith(doctrineParseFn, 'three');
                 });
 
-                it('returns the doctrine comments', () => {
+                it('returns the doctrine.Annotations', () => {
                     expect(result.length).toBe(4);
                     expect(result[0]).toEqual({
                         description: 'one-doctrine',
                         tags: [{ title: 'param', 'description': 'some param' }]
-                    } as doctrine.Comment);
+                    } as doctrine.Annotation);
                     expect(result[1]).toEqual({
                         description: 'two-doctrine',
                         tags: [{ title: 'param', 'description': 'some param' }]
-                    } as doctrine.Comment);
+                    } as doctrine.Annotation);
                     expect(result[2]).toEqual({
                         description: 'another two-doctrine',
                         tags: [{ title: 'param', 'description': 'some param' }]
-                    } as doctrine.Comment);
+                    } as doctrine.Annotation);
                     expect(result[3]).toEqual({
                         description: 'three-doctrine',
                         tags: [{ title: 'param', 'description': 'some param' }]
-                    } as doctrine.Comment);
+                    } as doctrine.Annotation);
                 });
 
                 afterEach(() => {
@@ -129,24 +129,24 @@ import * as path from 'path';
                     sinon.assert.calledWith(doctrineParseFn, 'three');
                 });
 
-                it('returns the doctrine comments', () => {
+                it('returns the doctrine.Annotations', () => {
                     expect(result.length).toBe(4);
                     expect(result[0]).toEqual({
                         description: 'one-doctrine',
                         tags: [{ title: 'param', 'description': 'some param' }]
-                    } as doctrine.Comment);
+                    } as doctrine.Annotation);
                     expect(result[1]).toEqual({
                         description: 'two-doctrine',
                         tags: [{ title: 'param', 'description': 'some param' }]
-                    } as doctrine.Comment);
+                    } as doctrine.Annotation);
                     expect(result[2]).toEqual({
                         description: 'another two-doctrine',
                         tags: [{ title: 'param', 'description': 'some param' }]
-                    } as doctrine.Comment);
+                    } as doctrine.Annotation);
                     expect(result[3]).toEqual({
                         description: 'three-doctrine',
                         tags: [{ title: 'param', 'description': 'some param' }]
-                    } as doctrine.Comment);
+                    } as doctrine.Annotation);
                 });
 
                 afterEach(() => {

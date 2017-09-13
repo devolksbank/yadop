@@ -15,7 +15,7 @@ class NgdocMapper {
      * Maps the comments to a workable output.
      * @param comments The comments.
      */
-    map(comments: doctrine.Comment[]): any {
+    map(comments: doctrine.Annotation[]): any {
         const modules: Module[] = this.getModules(comments);
         modules.forEach((module: Module) => {
             module.entities = this.getEntities(comments, module);
@@ -37,42 +37,42 @@ class NgdocMapper {
 
     /**
      * Gets all the entities for the given module.
-     * @param {doctrine.Comment[]} comments The comments.
+     * @param {doctrine.Annotation[]} comments The comments.
      * @param {Module} module The module.
      * @returns {Entity[]} entities The entities.
      */
-    getEntities = (comments: doctrine.Comment[], module: Module): Entity[] => comments
+    getEntities = (comments: doctrine.Annotation[], module: Module): Entity[] => comments
         .filter(this._onCommentsMatchingModule(module))
         .filter(this._onValidEntityType)
         .map(this._toEntity);
 
     /**
      * Gets all the methods for the given entity.
-     * @param {doctrine.Comment[]} comments The comments.
+     * @param {doctrine.Annotation[]} comments The comments.
      * @param {Entity} entity The entity.
      * @returns {Method[]} methods The methods.
      */
-    getMethods = (comments: doctrine.Comment[], entity: Entity): Method[] => comments
+    getMethods = (comments: doctrine.Annotation[], entity: Entity): Method[] => comments
         .filter(this._onCommentsMatchingMethodsOfEntity(entity))
         .filter(this._onTagsMatchingMethod)
         .map(this._toMethod);
 
     /**
      * Gets all the modules.
-     * @param {doctrine.Comment[]} comments The comments.
+     * @param {doctrine.Annotation[]} comments The comments.
      * @returns {Module[]} modules The modules.
      */
-    getModules = (comments: doctrine.Comment[]): Module[] => comments
+    getModules = (comments: doctrine.Annotation[]): Module[] => comments
         .filter(this._onCommentsContainingTheModuleAnnotation)
         .map(this._toModule);
 
     /**
      * Indicates if the comment contains tag @ngdoc module.
-     * @param {doctrine.Comment} comment The comment.
+     * @param {doctrine.Annotation} comment The comment.
      * @return {boolean} indicator The indicator.
      * @private
      */
-    private _onCommentsContainingTheModuleAnnotation = (comment: doctrine.Comment): boolean => comment.tags
+    private _onCommentsContainingTheModuleAnnotation = (comment: doctrine.Annotation): boolean => comment.tags
         .filter(tags.annotations.ngdoc)
         .filter(tags.values.module).length > 0;
 
@@ -82,7 +82,7 @@ class NgdocMapper {
      * @return {boolean} indicator The indicator.
      * @private
      */
-    private _onCommentsMatchingModule = (module: Module) => (comment: doctrine.Comment): boolean => comment.tags
+    private _onCommentsMatchingModule = (module: Module) => (comment: doctrine.Annotation): boolean => comment.tags
         .filter(tags.annotations.module)
         .filter((tag: any) => tag.name === module.name) // match module name
         .length > 0;
@@ -93,7 +93,7 @@ class NgdocMapper {
      * @return {boolean} indicator The indicator.
      * @private
      */
-    private _onCommentsMatchingMethodsOfEntity = (entity: Entity) => (comment: doctrine.Comment): boolean => comment.tags
+    private _onCommentsMatchingMethodsOfEntity = (entity: Entity) => (comment: doctrine.Annotation): boolean => comment.tags
         .filter(tags.annotations.methodOfTag)
         .filter((tag: any) => tag.description === entity.name)
         .length > 0;
@@ -104,49 +104,49 @@ class NgdocMapper {
      * @return {boolean} indicator The indicator.
      * @private
      */
-    private _onTagsMatchingEntity = (entity: Entity) => (comment: doctrine.Comment): boolean => comment.tags
+    private _onTagsMatchingEntity = (entity: Entity) => (comment: doctrine.Annotation): boolean => comment.tags
         .filter((tag: any) => tag.title === 'name' && tag.name === entity.name)
         .length > 0;
 
     /**
      * Indicates if the comment contains tag @method.
-     * @param {doctrine.Comment} comment The entity.
+     * @param {doctrine.Annotation} comment The entity.
      * @return {boolean} indicator The indicator.
      * @private
      */
-    private _onTagsMatchingMethod = (comment: doctrine.Comment): boolean => comment.tags
+    private _onTagsMatchingMethod = (comment: doctrine.Annotation): boolean => comment.tags
         .filter(tags.annotations.ngdoc)
         .filter(tags.values.method)
         .length > 0;
 
     /**
      * Indicates if the comment contains tag @requires.
-     * @param {doctrine.Comment} comment The entity.
+     * @param {doctrine.Annotation} comment The entity.
      * @return {boolean} indicator The indicator.
      * @private
      */
-    private _onTagsMatchingRequires = (comment: doctrine.Comment): boolean => comment.tags
+    private _onTagsMatchingRequires = (comment: doctrine.Annotation): boolean => comment.tags
         .filter(tags.annotations.requires)
         .length > 0;
 
     /**
      * Indicates if the entity type is valid.
-     * @param {doctrine.Comment} comment The comment.
+     * @param {doctrine.Annotation} comment The comment.
      * @return {boolean} indicator The indicator.
      * @private
      */
-    private _onValidEntityType = (comment: doctrine.Comment): boolean => comment.tags
+    private _onValidEntityType = (comment: doctrine.Annotation): boolean => comment.tags
         .filter(tags.annotations.ngdoc)
         .filter(this._existingEntityType)
         .length > 0;
 
     /**
      * Gets the parameters if present.
-     * @param {doctrine.Comment} comment The entity.
+     * @param {doctrine.Annotation} comment The entity.
      * @return {ParamType[]} paramTypes The paramTypes.
      * @private
      */
-    private _getParams = (comment: doctrine.Comment): ParamType[] => {
+    private _getParams = (comment: doctrine.Annotation): ParamType[] => {
         const paramTypes: ParamType[] = [];
 
         comment.tags.filter(tags.annotations.param).forEach((tag: any) => {
@@ -166,11 +166,11 @@ class NgdocMapper {
 
     /**
      * Gets the return if present.
-     * @param {doctrine.Comment} comment The entity.
+     * @param {doctrine.Annotation} comment The entity.
      * @return {ReturnType} returnType The returnType.
      * @private
      */
-    private _getReturn = (comment: doctrine.Comment): ReturnType => {
+    private _getReturn = (comment: doctrine.Annotation): ReturnType => {
         let returnType: ReturnType;
 
         const tag = comment.tags.find(tags.annotations.returns);
@@ -179,7 +179,7 @@ class NgdocMapper {
                 name: tag.description
             };
             if (tag.type !== null) {
-                returnType.type = tag.type.name;
+                returnType.type = (tag.type as any).name;
             }
         }
         return returnType;
@@ -187,27 +187,27 @@ class NgdocMapper {
 
     /**
      * Gets the deprecated tag if present.
-     * @param {doctrine.Comment} comment The entity.
+     * @param {doctrine.Annotation} comment The entity.
      * @return {doctrine.Tag} tag The tag.
      * @private
      */
-    private _getDeprecated = (comment: doctrine.Comment): doctrine.Tag =>
+    private _getDeprecated = (comment: doctrine.Annotation): doctrine.Tag =>
         comment.tags.find(tags.annotations.deprecated);
 
     /**
      * Gets all the requires for the given entity.
-     * @param {doctrine.Comment} comment The comment.
+     * @param {doctrine.Annotation} comment The comment.
      * @returns {string[]} requires The requires.
      */
-    private _getRequires = (comment: doctrine.Comment): string[] =>
+    private _getRequires = (comment: doctrine.Annotation): string[] =>
         comment.tags.filter(tags.annotations.requires).map((tag) => (tag as any).name);
 
     /**
      * Gets all the attributes for the given entity.
-     * @param {doctrine.Comment} comment The comment.
+     * @param {doctrine.Annotation} comment The comment.
      * @returns {AttributeType[]} attributes The attributes.
      */
-    private _getAttributes = (comment: doctrine.Comment): AttributeType[] =>
+    private _getAttributes = (comment: doctrine.Annotation): AttributeType[] =>
         comment.tags.filter(tags.annotations.param).map((tag: any) => {
             const attributeType: AttributeType = {
                 name: tag.name,
@@ -239,11 +239,11 @@ class NgdocMapper {
         });
     /**
      * Converts the given comment to an Entity.
-     * @param {doctrine.Comment} comment The entity.
+     * @param {doctrine.Annotation} comment The entity.
      * @return {Entity} entity The entity.
      * @private
      */
-    private _toEntity = (comment: doctrine.Comment): Entity => {
+    private _toEntity = (comment: doctrine.Annotation): Entity => {
         const entity: Entity = {
             name: (comment.tags.find(tags.annotations.name)as any).name,
             type: comment.tags.find(tags.annotations.ngdoc).description,
@@ -252,7 +252,7 @@ class NgdocMapper {
         };
 
         const deprecated = this._getDeprecated(comment);
-        if(deprecated !== undefined) {
+        if (deprecated !== undefined) {
             entity.deprecated = deprecated.description;
         }
 
@@ -265,11 +265,11 @@ class NgdocMapper {
 
     /**
      * Converts the given comment to a method.
-     * @param {doctrine.Comment} comment The entity.
+     * @param {doctrine.Annotation} comment The entity.
      * @return {Method} method The method.
      * @private
      */
-    private _toMethod = (comment: doctrine.Comment): Method => {
+    private _toMethod = (comment: doctrine.Annotation): Method => {
         const methodName = (comment.tags.find(tags.annotations.name)as any).name;
         const method: Method = {
             name: methodName.substring(methodName.indexOf('#') + 1, methodName.length),
@@ -277,7 +277,7 @@ class NgdocMapper {
         };
 
         const deprecated = this._getDeprecated(comment);
-        if(deprecated !== undefined) {
+        if (deprecated !== undefined) {
             method.deprecated = deprecated.description;
         }
 
@@ -295,11 +295,11 @@ class NgdocMapper {
 
     /**
      * Converts the given comment to a Module.
-     * @param {doctrine.Comment} comment The comment.
+     * @param {doctrine.Annotation} comment The comment.
      * @return {Module} module The module.
      * @private
      */
-    private _toModule = (comment: doctrine.Comment): Module => ({
+    private _toModule = (comment: doctrine.Annotation): Module => ({
         name: (comment.tags.find((tag) => tag.title === 'name') as any).name
     });
 }

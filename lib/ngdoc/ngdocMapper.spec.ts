@@ -8,21 +8,21 @@ import {Method} from './model/method';
     describe('ngdoc mapper', () => {
         let mapper: NgdocMapper;
 
-        const comments: doctrine.Comment[] = [{
+        const comments: doctrine.Annotation[] = [{
             tags: [
                 { title: 'ngdoc', description: 'module' },
                 { title: 'name', description: null, name: 'my-module' }
             ]
-        } as doctrine.Comment, {
+        } as doctrine.Annotation, {
             tags: [
                 { title: 'description', description: 'something' } // just a comment
             ]
-        } as doctrine.Comment, {
+        } as doctrine.Annotation, {
             tags: [
                 { title: 'ngdoc', description: 'module' },
                 { title: 'name', description: null, name: 'another-module' }
             ]
-        } as doctrine.Comment, {
+        } as doctrine.Annotation, {
             tags: [
                 { title: 'ngdoc', description: 'component' },
                 { title: 'module', description: null, type: null, name: 'another-module' },
@@ -55,7 +55,7 @@ import {Method} from './model/method';
                     name: 'items[].value'
                 },
             ]
-        }  as doctrine.Comment, { // an entity
+        }  as doctrine.Annotation, { // an entity
             tags: [
                 { title: 'ngdoc', description: 'service' },
                 { title: 'module', description: null, type: null, name: 'another-module' },
@@ -64,7 +64,7 @@ import {Method} from './model/method';
                 { title: 'requires', description: null, name: 'SomeOtherService' },
                 { title: 'requires', description: null, name: 'AnotherService' }
             ]
-        }  as doctrine.Comment, { // another entity
+        }  as doctrine.Annotation, { // another entity
             tags: [
                 { title: 'ngdoc', description: 'service' },
                 { title: 'module', description: null, type: null, name: 'another-module' },
@@ -72,14 +72,14 @@ import {Method} from './model/method';
                 { title: 'requires', description: null, name: 'SomeService' },
                 { title: 'deprecated', description: 'Use some other service.' },
             ]
-        }  as doctrine.Comment, { // another entity, but does not match a valid entity type
+        }  as doctrine.Annotation, { // another entity, but does not match a valid entity type
             tags: [
                 { title: 'ngdoc', description: 'invalid-type' },
                 { title: 'module', description: null, type: null, name: 'another-module' },
                 { title: 'name', description: null, name: 'another-component' },
                 { title: 'description', description: 'This component does something for someone else' }
             ]
-        }  as doctrine.Comment, { // an entity method
+        }  as doctrine.Annotation, { // an entity method
             tags: [
                 { title: 'ngdoc', description: 'method' },
                 { title: 'methodOf', description: 'SomeService' },
@@ -91,7 +91,7 @@ import {Method} from './model/method';
                 },
                 { title: 'param', description: 'When to say', name: 'when', 'type': null } // no type
             ]
-        } as doctrine.Comment, { // another entity method
+        } as doctrine.Annotation, { // another entity method
             tags: [
                 { title: 'ngdoc', description: 'method' },
                 { title: 'methodOf', description: 'SomeService' },
@@ -102,7 +102,7 @@ import {Method} from './model/method';
                     type: { type: 'NameExpression', name: 'object' }
                 }
             ]
-        } as doctrine.Comment];
+        } as doctrine.Annotation];
 
 
         beforeEach(() => {

@@ -15,7 +15,7 @@ import NgdocProcessor from './ngdocProcessor';
 
         let configuration: Configuration;
         let processor: NgdocProcessor;
-        let result: doctrine.Comment[];
+        let result: doctrine.Annotation[];
 
         const code = 'code';
 
@@ -56,16 +56,16 @@ import NgdocProcessor from './ngdocProcessor';
                 result = processor.process();
             });
 
-            it('returns the only the ngdoc doctrine comments', () => {
+            it('returns the only the ngdoc doctrine.Annotations', () => {
                 expect(result.length).toBe(2);
                 expect(result[0]).toEqual({
                     description: 'another two-doctrine',
                     tags: [{ title: 'ngdoc', 'description': 'some param' }]
-                } as doctrine.Comment);
+                } as doctrine.Annotation);
                 expect(result[1]).toEqual({
                     description: 'three-doctrine',
                     tags: [{ title: 'ngdoc', 'description': 'some param' }]
-                } as doctrine.Comment);
+                } as doctrine.Annotation);
             });
 
             afterEach(() => {

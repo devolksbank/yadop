@@ -5,7 +5,7 @@ import * as doctrine from 'doctrine';
 class NgdocProcessor extends Processor {
 
     /** {@inheritDoc} */
-    process(): doctrine.Comment[] {
+    process(): doctrine.Annotation[] {
         return super.process()
             .filter(this._onCommentsContainingNgdoc);
     }
@@ -16,7 +16,7 @@ class NgdocProcessor extends Processor {
      * @return {boolean} match Indicator match.
      * @private
      */
-    private _onCommentsContainingNgdoc = (comment: doctrine.Comment): boolean =>
+    private _onCommentsContainingNgdoc = (comment: doctrine.Annotation): boolean =>
         comment.tags.filter((tag) => tag.title === 'ngdoc').length > 0;
 }
 

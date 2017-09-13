@@ -37,7 +37,7 @@ class Processor {
      * Process all matching files and return the comments.s
      * @return {[Comment,Comment,Comment,Comment,Comment]}
      */
-    process(): doctrine.Comment[] {
+    process(): doctrine.Annotation[] {
         return glob
             .sync(this.pattern, this.options)
             .map(this._toEspreeComments)
@@ -67,11 +67,11 @@ class Processor {
         previousComments.concat(currentComments);
 
     /**
-     * Converts the espree comments to doctrine comments.
+     * Converts the espree comments to doctrine.Annotations.
      * @param comment The comment.
      * @private
      */
-    private _toDoctrineComments = (comment: espree.Comment): doctrine.Comment =>
+    private _toDoctrineComments = (comment: espree.Comment): doctrine.Annotation =>
         doctrine.parse(comment.value, { unwrap: true });
 }
 

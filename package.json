@@ -30,6 +30,7 @@
   },
   "homepage": "https://github.com/devolksbank/yadop#readme",
   "devDependencies": {
+    "@types/doctrine": "0.0.3",
     "@types/fs-extra": "4.0.0",
     "@types/glob": "5.0.32",
     "@types/jasmine": "2.5.54",
