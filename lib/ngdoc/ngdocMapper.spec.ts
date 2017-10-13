@@ -89,7 +89,11 @@ import {Method} from './model/method';
                     title: 'param', description: 'Who said it', name: 'who',
                     type: { type: 'NameExpression', name: 'string' }
                 },
-                { title: 'param', description: 'When to say', name: 'when', 'type': null } // no type
+                { title: 'param', description: 'When to say', name: 'when', 'type': null }, // no type
+                {
+                    title: 'returns', description: 'message The message',
+                    type: { type: 'NameExpression', name: 'object' }
+                }
             ]
         } as doctrine.Annotation, { // another entity method
             tags: [
@@ -146,7 +150,8 @@ import {Method} from './model/method';
                             params: [{ name: 'who', description: 'Who said it', type: 'string' }, {
                                 name: 'when',
                                 description: 'When to say'
-                            }]
+                            }],
+                            returns: { name: 'message The message', type: 'object' }
                         }, {
                             name: 'welcome',
                             description: 'Say welcome',
@@ -236,7 +241,8 @@ import {Method} from './model/method';
                     params: [
                         { name: 'who', description: 'Who said it', type: 'string' }, // with a type
                         { name: 'when', description: 'When to say' } // without type (not specified)
-                    ] // no return type
+                    ],
+                    returns: { name: 'message The message', type: 'object' }
                 });
                 expect(serviceMethod[1]).toEqual({
                     name: 'welcome',

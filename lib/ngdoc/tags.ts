@@ -1,4 +1,5 @@
 import * as doctrine from 'doctrine';
+
 export namespace tags {
     export namespace annotations {
 
@@ -8,7 +9,7 @@ export namespace tags {
          * @return {boolean} indicator The indicator.
          */
         export function description(tag: doctrine.Tag): boolean {
-            return _onlyAtTags(tag, 'description');
+            return _onlyAtTags(tag, ['description', 'desc']);
         }
 
         /**
@@ -17,7 +18,7 @@ export namespace tags {
          * @return {boolean} indicator The indicator.
          */
         export function deprecated(tag: doctrine.Tag): boolean {
-            return _onlyAtTags(tag, 'deprecated');
+            return _onlyAtTags(tag, ['deprecated']);
         }
 
         /**
@@ -26,7 +27,7 @@ export namespace tags {
          * @return {boolean} indicator The indicator.
          */
         export function methodOfTag(tag: doctrine.Tag): boolean {
-            return _onlyAtTags(tag, 'methodOf');
+            return _onlyAtTags(tag, ['methodOf']);
         }
 
         /**
@@ -35,7 +36,7 @@ export namespace tags {
          * @return {boolean} indicator The indicator.
          */
         export function module(tag: doctrine.Tag): boolean {
-            return _onlyAtTags(tag, 'module');
+            return _onlyAtTags(tag, ['module']);
         }
 
         /**
@@ -44,7 +45,7 @@ export namespace tags {
          * @return {boolean} indicator The indicator.
          */
         export function name(tag: doctrine.Tag): boolean {
-            return _onlyAtTags(tag, 'name');
+            return _onlyAtTags(tag, ['name']);
         }
 
         /**
@@ -53,7 +54,7 @@ export namespace tags {
          * @return {boolean} indicator The indicator.
          */
         export function ngdoc(tag: doctrine.Tag): boolean {
-            return _onlyAtTags(tag, 'ngdoc');
+            return _onlyAtTags(tag, ['ngdoc']);
         }
 
         /**
@@ -62,7 +63,7 @@ export namespace tags {
          * @return {boolean} indicator The indicator.
          */
         export function param(tag: doctrine.Tag): boolean {
-            return _onlyAtTags(tag, 'param');
+            return _onlyAtTags(tag, ['param', 'arg', 'argument']);
         }
 
         /**
@@ -71,7 +72,7 @@ export namespace tags {
          * @return {boolean} indicator The indicator.
          */
         export function requires(tag: doctrine.Tag): boolean {
-            return _onlyAtTags(tag, 'requires');
+            return _onlyAtTags(tag, ['requires']);
         }
 
         /**
@@ -80,17 +81,18 @@ export namespace tags {
          * @return {boolean} indicator The indicator.
          */
         export function returns(tag: doctrine.Tag): boolean {
-            return _onlyAtTags(tag, 'return');
+            return _onlyAtTags(tag, ['returns', 'return']);
         }
 
         /**
          * Indicates if the tag is contains a @name tag.
          * @param tag The tag.
+         * @param tagNames List of tag name aliases
          * @return {boolean} indicator The indicator.
          * @private
          */
-        export function _onlyAtTags(tag: doctrine.Tag, tagName): boolean {
-            return tag.title === tagName;
+        export function _onlyAtTags(tag: doctrine.Tag, tagNames: string[]): boolean {
+            return tagNames.some(tagName => tag.title === tagName);
         }
     }
 
@@ -101,7 +103,7 @@ export namespace tags {
          * @return {boolean} indicator The indicator.
          */
         export function method(tag: doctrine.Tag): boolean {
-            return tag.description === 'method'
+            return ['function', 'func', 'method'].some(tagName => tag.description === tagName)
         }
 
         /**
