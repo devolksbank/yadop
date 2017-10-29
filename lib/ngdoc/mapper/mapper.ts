@@ -18,11 +18,9 @@ class NgdocMapper {
     map(comments: doctrine.Annotation[]): Module[] {
         const modules: Module[] = this.getModules(comments);
         modules.forEach((module: Module) => {
-            console.log(module.name);
             module.entities = this.getEntities(comments, module);
 
             module.entities.forEach((entity: Entity) => {
-                console.log(' - ' + entity.name);
                 entity.methods = this.getMethods(comments, entity);
             });
         });
@@ -146,8 +144,8 @@ class NgdocMapper {
         if (tag.description) {
             attributeType.description = tag.description.replace(/^[\n\r]+/, '');
         }
-        attributeType.optional = tag.type.type === Syntax.OptionalType;
-        if (tag.type.type === Syntax.OptionalType) {
+        attributeType.optional = !!tag.type && tag.type.type === Syntax.OptionalType;
+        if (tag.type && tag.type.type === Syntax.OptionalType) {
             if (tag.type.expression.type === Syntax.NameExpression) {
                 attributeType.type = tag.type.expression.name;
             }
