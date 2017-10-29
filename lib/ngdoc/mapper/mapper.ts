@@ -165,7 +165,7 @@ class NgdocMapper {
         var type = comment.tags.find(tags.annotations.ngdoc);
         if (type) {
             entity.type = type.description;
-            if (entity.type === 'component') {
+            if (['directive', 'component'].indexOf(entity.type)) {
                 entity.attributes = this._getBindings(comment);
             } else {
                 entity.attributes = this._getAttributes(comment);
