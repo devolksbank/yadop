@@ -54,7 +54,7 @@ export namespace tags {
          * @return {boolean} indicator The indicator.
          */
         export function ngdoc(tag: doctrine.Tag): boolean {
-            return _onlyAtTags(tag, ['ngdoc']);
+            return _onlyAtTags(tag, ['ngdoc', 'yadop']);
         }
 
         /**

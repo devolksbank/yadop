@@ -1,12 +1,10 @@
 import {Method} from './method';
 import {AttributeType} from './attributeType';
+import {Yadop} from "./yadop";
 
-export interface Entity {
+export interface Entity extends Yadop {
+    type?: string;
     attributes?: AttributeType[];
-    name: string;
-    deprecated?: string;
-    description?: string;
     methods?: Method[];
-    requires: string[];
-    type: string;
+    requires?: string[];
 }

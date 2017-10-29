@@ -1,6 +1,8 @@
 export interface AttributeType {
     description?: string;
     name: string;
-    optional: boolean;
     type?: string;
+    optional?: boolean;
+    defaultValue?: string;
+    binding?: string;
 }
