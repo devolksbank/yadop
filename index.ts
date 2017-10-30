@@ -1,7 +1,7 @@
 import Configuration from './lib/configuration';
 import Processor from './lib/processor';
-import NgdocProcessor from './lib/ngdoc/ngdocProcessor';
-import NgdocMapper from './lib/ngdoc/ngdocMapper';
+import NgdocProcessor from './lib/ngdoc/processor/processor';
+import NgdocMapper from './lib/ngdoc/mapper/mapper';
 
 (() => {
     'use strict';

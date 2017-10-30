@@ -72,7 +72,11 @@ class Processor {
      * @private
      */
     private _toDoctrineComments = (comment: espree.Comment): doctrine.Annotation =>
-        doctrine.parse(comment.value, { unwrap: true });
+        doctrine.parse(comment.value, {
+            unwrap: true,
+            sloppy: true,
+            lineNumbers: true
+        });
 }
 
 export default Processor;
