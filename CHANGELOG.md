@@ -1,3 +1,10 @@
+<a name="1.3.1"></a>
+# 1.3.1 (2017-10-30)
+
+## Features
+- Add support for aliases of tags as per the jsdoc 
+- Add support for both @ngdoc directive and component 
+
 <a name="1.2.0"></a>
 # 1.2.0 (2017-09-12)
 
